@@ -1,0 +1,8 @@
+body {
+	background-color: #111 !important;
+}
+input, select {
+	background-color: #111 !important;
+	border: none !important;
+	color: #f8f9fa !important;
+}
