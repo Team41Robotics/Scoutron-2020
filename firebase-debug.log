@@ -1,0 +1,80 @@
+[debug] [2020-03-05T14:14:30.945Z] ----------------------------------------------------------------------
+[debug] [2020-03-05T14:14:30.948Z] Command:       /usr/bin/node /usr/bin/firebase deploy
+[debug] [2020-03-05T14:14:30.948Z] CLI Version:   7.14.0
+[debug] [2020-03-05T14:14:30.948Z] Platform:      linux
+[debug] [2020-03-05T14:14:30.948Z] Node Version:  v13.9.0
+[debug] [2020-03-05T14:14:30.948Z] Time:          Thu Mar 05 2020 09:14:30 GMT-0500 (Eastern Standard Time)
+[debug] [2020-03-05T14:14:30.949Z] ----------------------------------------------------------------------
+[debug] [2020-03-05T14:14:30.949Z] 
+[debug] [2020-03-05T14:14:30.956Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-03-05T14:14:30.956Z] > authorizing via signed-in user
+[debug] [2020-03-05T14:14:30.956Z] [iam] checking project scoutron-16785 for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2020-03-05T14:14:30.958Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/scoutron-16785:testIamPermissions  
+
+[debug] [2020-03-05T14:14:31.238Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-05T14:14:31.243Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/scoutron-16785  
+ 
+[debug] [2020-03-05T14:14:31.476Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'scoutron-16785'...
+[info] 
+[info] i  deploying database, hosting
+[info] i  database: checking rules syntax...
+[debug] [2020-03-05T14:14:31.486Z] >>> HTTP REQUEST PUT https://scoutron-16785.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  "rules": {
+    ".read": true,
+    ".write": true,
+  }
+}
+[debug] [2020-03-05T14:14:31.826Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules syntax for database scoutron-16785 is valid
+[debug] [2020-03-05T14:14:31.831Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/scoutron-16785/versions  
+
+[debug] [2020-03-05T14:14:32.736Z] <<< HTTP RESPONSE 200
+[info] i  hosting[scoutron-16785]: beginning deploy...
+[info] i  hosting[scoutron-16785]: found 22 files in build
+[debug] [2020-03-05T14:14:33.620Z] [hosting] hash cache [YnVpbGQ] stored for 22 files
+[debug] [2020-03-05T14:14:33.620Z] [hosting][hash queue][FINAL]
+[debug] [2020-03-05T14:14:33.621Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/scoutron-16785/versions/daf0203b2ee0409c:populateFiles  
+ <request body omitted>
+[debug] [2020-03-05T14:14:34.200Z] <<< HTTP RESPONSE 200
+[debug] [2020-03-05T14:14:34.227Z] [hosting][populate queue][FINAL]
+[debug] [2020-03-05T14:14:34.228Z] [hosting] uploads queued: 6
+[debug] [2020-03-05T14:14:35.532Z] [hosting][upload queue][FINAL]
+[info] ✔  hosting[scoutron-16785]: file upload complete
+[debug] [2020-03-05T14:14:35.534Z] [hosting] deploy completed after 2796ms
+[info] i  database: releasing rules...
+[debug] [2020-03-05T14:14:35.536Z] >>> HTTP REQUEST PUT https://scoutron-16785.firebaseio.com/.settings/rules.json  
+ {
+  "rules": {
+    ".read": true,
+    ".write": true,
+  }
+}
+[debug] [2020-03-05T14:14:36.042Z] <<< HTTP RESPONSE 200
+[info] ✔  database: rules for database scoutron-16785 released successfully
+[debug] [2020-03-05T14:14:36.043Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "scoutron-16785"
+    },
+    "site": "scoutron-16785",
+    "version": "sites/scoutron-16785/versions/daf0203b2ee0409c"
+  }
+]
+[info] i  hosting[scoutron-16785]: finalizing version...
+[debug] [2020-03-05T14:14:36.044Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/scoutron-16785/versions/daf0203b2ee0409c?updateMask=status  
+
