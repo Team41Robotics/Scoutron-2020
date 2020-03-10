@@ -5,32 +5,38 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from "react-bootstrap/Button";
 
-import { withAuthorization } from '../Session';
+import { withAuthentication } from '../Session';
 
 class MatchInput extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		const sid = this.props.cookies.get('sid');
 		this.state = {
 			uid: this.props.cookies.get('uid'),
 			successfulClimb: false,
+			email: sid.substring(0, sid.search('@')),
 		};
 		this.test = {};
 		this.cookies = this.props.cookies;
 	}
 	handleChange(event) {
 		let index = event.target.id;
-		this.setState({[index]: event.target.value});
+		if (event.target.type === "checkbox") {
+			(event.target.checked === "on") ? this.setState({[index]: true}): this.setState({[index]: false});
+		} else {
+			this.setState({[index]: event.target.value});
+		}
 		event.preventDefault();
 	}
 	handleSubmit(event) {
-		return this.props.firebase.scoutData(this.props.cookies.get('uid'))(this.state.matchNumber)(this.state.teamNumber).set(this.state);
+		return this.props.firebase.scoutData(this.state.email)(this.state.matchNumber)(this.state.teamNumber).set(this.state);
 	}
 	render() {
 		return (
 			<div>
-				<Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark">
+				<Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark text-white">
 					<h1 className="text-center">Match Scouting</h1>
 					<br />
 
@@ -83,8 +89,8 @@ class MatchInput extends React.Component {
 							</Form.Group>
 							<Form.Group>
 								<Form.Label>Speed</Form.Label>
-								<Form.Control id="teleopRobotSpeed" onChange={this.handleChange} as="select">
-									<option disabled selected>Robot Speed</option>
+								<Form.Control defaultValue="Robot Speed" id="teleopRobotSpeed" onChange={this.handleChange} as="select">
+									<option disabled>Robot Speed</option>
 									<option value={1}>Slow</option>
 									<option value={2}>Medium</option>
 									<option value={3}>Fast</option>
@@ -110,5 +116,4 @@ class MatchInput extends React.Component {
 	}
 }
 
-const condition = authUser => authUser != null;
-export default withAuthorization(condition)(MatchInput);
+export default withAuthentication(MatchInput);

@@ -1,16 +1,35 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
+import AuthUserContext from "./context";
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import {compose} from "recompose";
 
-const withAuthorization = condition => Component => {
+
+const withAuthorization = Component => {
 	class WithAuthorization extends React.Component {
+		constructor(props) {
+			super(props);
+			if (this.props.cookies.get('sid')) {
+				this.id = this.props.cookies.get('sid').substring(0, this.props.cookies.get('sid').search('@'));
+			}
+			this.state = {
+				role: '',
+			}
+		}
+
 		componentDidMount() {
+			if (this.id) {
+				this.props.firebase.user(this.id).on('value', snapshot => {
+					if (snapshot.val()) {
+						this.setState({
+							role: snapshot.val()['role'],
+						});
+					}
+				});
+			}
 			this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-				if (!condition(authUser)) {
-					this.props.history.push(ROUTES.SIGN_IN);
-					//return (<div>Hey there fams</div>);
+				if ((this.state.role !== "admin")) {
+					this.setState( {role:"reg"} );
 				}
 				},
 			);
@@ -21,13 +40,18 @@ const withAuthorization = condition => Component => {
 		}
 
 		render() {
-			return <Component {...this.props} />;
+			return (
+				<AuthUserContext.Provider value={this.state.authUser}>
+					{(this.state.role === 'admin') ? <Component {...this.props} /> : null}
+				</AuthUserContext.Provider>
+			);
 		}
 	}
-
-	return compose(
-		withRouter,
-		withFirebase,
-	)(WithAuthorization);
+	return (
+		compose(
+			withFirebase,
+		)(WithAuthorization)
+	);
 };
+
 export default withAuthorization;

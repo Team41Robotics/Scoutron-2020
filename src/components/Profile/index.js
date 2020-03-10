@@ -3,14 +3,14 @@ import React from 'react';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Table from 'react-bootstrap/Table';
 // My Stuff
-import {withAuthorization} from '../Session/';
+import {withAuthentication} from '../Session/';
 
 class Profile extends React.Component {
 	constructor(props) {
 		super(props);
-		this.uid = this.props.cookies.get('uid');
+		this.sid = this.props.cookies.get('sid');
 		this.user= "";
-		this.id = '';
+		this.id = this.sid.substring(0, this.sid.search('@'));
 		this.matches = {};
 		this.pits = {};
 		this.state = {
@@ -22,18 +22,9 @@ class Profile extends React.Component {
 	}
 	componentDidMount() {
 		this.setState({ loading: true });
-		this.props.firebase.user(this.uid).on('value', snapshot => {
-			this.user = snapshot.val();
-			let mail = snapshot.val().email;
-			this.id = mail.substring(0, mail.search('@'));
-			this.setState({
-				loading: false,
-			});
-		});
-		this.setState({ loading: true });
 		this.props.firebase.matchInfo(this.id).on('value', snapshot => {
-			this.matches = snapshot.val()[this.id]['match'];
-			this.pits = snapshot.val()[this.id]['pit'];
+			this.matches = snapshot.val()['match'];
+			this.pits = snapshot.val()['pit'];
 			console.log("HEY: ");
 			console.log(this.pits);
 			this.setState({
@@ -52,7 +43,7 @@ class Profile extends React.Component {
 				{this.state.loading && <div>Loading ...</div>}
 				<Jumbotron className="mx-3 mx-sm-5 my-3 text-center text-sm-left bg-dark text-light">
 					<div className="h3">My Pit Scouting Assignments:</div>
-					<Table variant="dark">
+					<Table hover repsonsive variant="dark">
 						<thead>
 						<tr>
 							<th>Team #</th>
@@ -77,7 +68,7 @@ class Profile extends React.Component {
 				<Jumbotron className="mx-3 mx-sm-5 my-3 text-center text-sm-left bg-dark text-light">
 					<div className="h3">My Match Scouting Assignments:</div>
 					<br />
-					<Table variant="dark">
+					<Table hover responsive variant="dark">
 						<thead>
 							<tr>
 								<th>Match #</th>
@@ -108,5 +99,4 @@ class Profile extends React.Component {
 	}
 }
 
-const condition = authUser => authUser != null;
-export default withAuthorization(condition)(Profile);
+export default withAuthentication(Profile);

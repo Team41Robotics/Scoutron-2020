@@ -20,8 +20,8 @@ class Firebase {
 		this.db = app.database();
 		this.provider = new app.auth.GoogleAuthProvider();
 		this.currentUserID = null;
+		this.currentMatch = null;
 	};
-
 
 	// AUTH API
 	doSignInWithRedirect = () =>
@@ -38,10 +38,21 @@ class Firebase {
 
 
 	// USER API
+	table = place => this.db.ref(`${place}`);
 	user = uid => this.db.ref(`/users/${uid}`);
 	users = () => this.db.ref('/users');
-	scoutData = uid => matchNum => teamNum => this.db.ref(`scoutData/${uid}/${matchNum}-${teamNum}`);
+	scoutData = uid => matchNum => teamNum => this.db.ref(`/scoutData/${uid}/${matchNum}-${teamNum}`);
+	otherScoutData = uid => matchTeam => this.db.ref(`/scoutData/${uid}/${matchTeam}`);
+	pitData = uid => teamNum => this.db.ref(`/pitData/${uid}/${teamNum}`);
 	matchInfo = uid => this.db.ref(`/scoutAssignments/${uid}/`);
+
+	matchIsDone = uid => matchTeam => {
+		this.otherScoutData(uid)(matchTeam).on('value', snapshot => {
+			return snapshot.val();
+		});
+		console.log(this.currentMatch);
+		return !!this.currentMatch;
+	}
 }
 
 

@@ -5,16 +5,23 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from "react-bootstrap/Button";
 
-import { withAuthorization } from '../Session';
+import {withAuthentication} from '../Session';
 
 class PitInput extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		const sid = this.props.cookies.get('sid');
 		this.state = {
 			uid: this.props.cookies.get('uid'),
-			HGval: "No",
+			email: sid.substring(0, sid.search('@')),
+			longRange: false,
+			medRange: false,
+			shortRange: false,
+			lowGoal: false,
+			highGoal: false,
+			wheelOfFortune: false,
 		};
 		this.formVals = {};
 		this.test = {};
@@ -27,30 +34,30 @@ class PitInput extends React.Component {
 		} else {
 			this.setState({[index]: event.target.value});
 		}
-		console.log(event.target.value);
 	}
 	handleSubmit(event) {
-		return this.props.firebase.scoutData(this.props.cookies.get('uid'))(this.state.matchNumber)(this.state.teamNumber).set(this.state);
+		return this.props.firebase.pitData(this.state.email)(this.state.teamNumber).set(this.state);
 	}
 	render() {
 		return (
 			<div>
-				<Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark">
+				<Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark text-white">
 					<h1 className="text-center">Pit Scouting</h1>
 					<br />
 
-					<Form>
+					<Form onSubmit={this.handleSubmit}>
 						<Jumbotron className="py-4" style={{ backgroundColor: "rgba(255,255,255,0.25)" }}>
 							<h3 className="text-center">Robot Information</h3>
 
 							<Form.Group>
 								<Form.Label>Team Number</Form.Label>
-								<Form.Control type="number" pattern="[0-9]*" min={0} placeholder="Enter Team Number" />
+								<Form.Control onChange={this.handleChange} id="teamNumber" type="number" pattern="[0-9]*" min={0} placeholder="Enter Team Number" />
 							</Form.Group>
 							<Form.Group>
 								<Form.Label>Type of Drivetrain</Form.Label>
-								<Form.Control as="select">
-									<option default>Tank</option>
+								<Form.Control onChange={this.handleChange} id="driveType" as="select">
+									<option>Please select an option</option>
+									<option>Tank</option>
 									<option>Mecanum</option>
 									<option>Swerve</option>
 								</Form.Control>
@@ -67,15 +74,17 @@ class PitInput extends React.Component {
 								<Form.Group as={Col} className="text-center col-6 col-md-4">
 									<Form.Check
 										type="switch"
-										id="low-goal"
+										id="lowGoal"
 										label="Low Goal?"
+										onChange={this.handleChange}
 									/>
 								</Form.Group>
 								<Form.Group as={Col} className="text-center">
 									<Form.Check
 										type="switch"
-										id="wheel-of-fortune"
+										id="wheelOfFortune"
 										label="Wheel of Fortune?"
+										onChange={this.handleChange}
 									/>
 								</Form.Group>
 							</Form.Row>
@@ -85,29 +94,30 @@ class PitInput extends React.Component {
 									<Form.Label className="my-auto">Shooting Range: </Form.Label>
 								</Form.Group>
 								<Form.Group as={Col} className="d-flex justify-content-around col-12 col-md-auto">
-									<Form.Check inline label="Short" type="checkbox"/>
-									<Form.Check inline label="Medium" type="checkbox"/>
-									<Form.Check inline label="Long" type="checkbox"/>
+									<Form.Check inline id="shortRange" label="Short" type="checkbox" onChange={this.handleChange}/>
+									<Form.Check inline id="medRange" label="Medium" type="checkbox" onChange={this.handleChange}/>
+									<Form.Check inline id="longRange" label="Long" type="checkbox" onChange={this.handleChange}/>
 								</Form.Group>
 							</Form.Row>
 							}
 							<Form.Group>
 								<Form.Label>Climbing?</Form.Label>
 								<Form.Control id="climbing" onChange={this.handleChange} as="select">
-									<option default disabled>Can it climb?</option>
+									<option default>Can it climb?</option>
 									<option>No Climb</option>
 									<option>Stationary Climb</option>
 									<option>Buddy Climb</option>
 									<option>Other</option>
 								</Form.Control>
 							</Form.Group>
-							{(this.state.climbing == "Other") &&
+							{(this.state.climbing === "Other") &&
 							<Form.Group>
 								<Form.Label>Please specify:</Form.Label>
 								<Form.Control type="text"/>
 							</Form.Group>
 							}
 						</Jumbotron>
+						<Button block size="lg" type="submit" className="bg-secondary border-0">Submit Scout</Button>
 					</Form>
 				</Jumbotron>
 			</div>
@@ -115,5 +125,4 @@ class PitInput extends React.Component {
 	}
 }
 
-const condition = authUser => authUser != null;
-export default withAuthorization(condition)(PitInput);
+export default withAuthentication(PitInput);

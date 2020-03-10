@@ -4,6 +4,7 @@ import { compose } from 'recompose';
 import { withFirebase } from '../Firebase';
 import 'firebase/auth';
 import * as ROUTES from '../../constants/routes';
+
 class SignInPage extends React.Component {
 	render() {
 		return (
@@ -18,6 +19,7 @@ const INITIAL_STATE = {
 	email: '',
 	password: '',
 	error: null,
+	isAdmin: false,
 };
 class SignInFormBase extends Component {
 	constructor(props) {
@@ -28,9 +30,7 @@ class SignInFormBase extends Component {
 	};
 
 	render() {
-		this.fb.doSignInWithRedirect().then(() => {
-			console.log("Going");
-		});
+		this.fb.doSignInWithRedirect().then();
 		this.setState({ ...INITIAL_STATE });
 		this.props.history.push(ROUTES.LANDING);
 
