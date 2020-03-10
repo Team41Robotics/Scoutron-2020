@@ -5,7 +5,7 @@ import * as ROUTES from '../../constants/routes';
 import {compose} from "recompose";
 
 
-const withAuthorization = Component => {
+const withAuthorization = (Component, role) => {
 	class WithAuthorization extends React.Component {
 		constructor(props) {
 			super(props);
@@ -28,7 +28,7 @@ const withAuthorization = Component => {
 				});
 			}
 			this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-				if ((this.state.role !== "admin")) {
+				if ((this.state.role !== role)) {
 					this.setState( {role:"reg"} );
 				}
 				},
@@ -42,7 +42,7 @@ const withAuthorization = Component => {
 		render() {
 			return (
 				<AuthUserContext.Provider value={this.state.authUser}>
-					{(this.state.role === 'admin') ? <Component {...this.props} /> : null}
+					{(this.state.role === role) ? <Component {...this.props} /> : null}
 				</AuthUserContext.Provider>
 			);
 		}

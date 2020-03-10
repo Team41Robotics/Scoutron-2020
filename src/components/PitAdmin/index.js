@@ -49,7 +49,7 @@ const TablePrint = ({ table }) => (
 	<div>
 		<Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark text-white">
 			<h1>Pit Scouting</h1>
-			<Table responsive striped bordered hover className="text-white">
+			<Table responsive striped bordered hover variant="dark" className="text-white">
 				<thead>
 				<tr>
 					<th>Team #</th>
@@ -93,4 +93,4 @@ const TablePrint = ({ table }) => (
 	</div>
 );
 
-export default withAuthorization(PitAdminPage);
+export default withAuthorization(PitAdminPage, "admin");

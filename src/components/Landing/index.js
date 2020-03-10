@@ -40,7 +40,6 @@ class LandingPage extends React.Component {
 					if (Object.values(ROLES.admins).indexOf(this.props.cookies.get('sid')) !== -1) {
 						this.role = ROLES.ADMIN;
 					}
-					console.log(Object.values(ROLES.admins).indexOf(this.props.cookies.get('sid')) !== -1);
 					// Create a user in your Firebase realtime database
 					const email = loggedInUser.user.email.substring(0, loggedInUser.user.email.search('@'));
 					this.cookies.set('uid', loggedInUser.user.uid, {path: '/'});

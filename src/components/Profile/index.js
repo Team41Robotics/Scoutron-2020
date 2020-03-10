@@ -25,8 +25,6 @@ class Profile extends React.Component {
 		this.props.firebase.matchInfo(this.id).on('value', snapshot => {
 			this.matches = snapshot.val()['match'];
 			this.pits = snapshot.val()['pit'];
-			console.log("HEY: ");
-			console.log(this.pits);
 			this.setState({
 				loading: false,
 			});
@@ -77,7 +75,6 @@ class Profile extends React.Component {
 						</thead>
 						<tbody>
 						{Object.keys(this.matches).map((match, index) => {
-							console.log("YES: " + this.matches[index+1]);
 							if (this.matches[index+1]) {
 								this.currentBoi = this.matches[index + 1];
 							} else {

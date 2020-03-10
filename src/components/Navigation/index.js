@@ -13,7 +13,6 @@ import {withFirebase} from "../Firebase"
 
 const Navigation = (props) => (
 	<div>
-		{console.log(props)}
 		<AuthUserContext.Consumer>
 				{authUser => authUser ? <NavigationAuth cookies={props.cookies} {...props}/> : <NavigationNonAuth cookies={props.cookies} {...props}/>}
 		</AuthUserContext.Consumer>

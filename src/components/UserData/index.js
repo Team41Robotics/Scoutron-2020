@@ -4,6 +4,8 @@ import withAuthorization from "../Session/withAuthorization";
 // Bootstrap
 import { Table } from "react-bootstrap";
 import Jumbotron from "react-bootstrap/Jumbotron";
+// Roles
+import * as ROLES from '../../constants/roles';
 
 class UserData extends React.Component {
 	constructor(props) {
@@ -31,7 +33,7 @@ class UserData extends React.Component {
 		return (
 			<div>
 				<Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark text-white">
-					<Table responsive bordered hover className="text-white">
+					<Table responsive bordered hover variant="dark" className="text-white">
 						<thead>
 							<tr>
 								<th>ID #</th>
@@ -45,7 +47,6 @@ class UserData extends React.Component {
 									Object.keys(currentAssign[user].match).map((match) => {
 										const currentMatch = currentAssign[user].match[match];
 										const color = (!!scoutMatches[user][currentMatch]) ? "bg-success" : "bg-danger";
-										console.log(currentMatch);
 										return (
 											<tr>
 												<th>{user}</th>
@@ -64,4 +65,4 @@ class UserData extends React.Component {
 	}
 }
 
-export default withAuthorization(UserData);
+export default withAuthorization(UserData, ROLES.ADMIN);
