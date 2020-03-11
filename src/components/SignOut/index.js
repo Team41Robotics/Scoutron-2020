@@ -21,6 +21,8 @@ class SignOutFormBase extends Component {
 		this.props.firebase
 			.doSignOut()
 			.then(() => {
+				this.cookies.remove('sid');
+				this.cookies.remove('uid');
 				this.props.history.push(ROUTES.LANDING);
 			});
 		return <h2>Loading Logout...</h2>;
