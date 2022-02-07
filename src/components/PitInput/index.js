@@ -12,10 +12,18 @@ class PitInput extends React.Component {
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.getPitData = this.getPitData.bind(this);
+
 		const sid = this.props.cookies.get('sid');
+		if (this.props.cookies.get('sid')) {
+			this.id = this.props.cookies.get('sid').substring(0, this.props.cookies.get('sid').search('@'));
+		} else {
+			window.history.back();
+		}
 		this.state = {
 			uid: this.props.cookies.get('uid'),
 			email: sid.substring(0, sid.search('@')),
+			pitData: {gay:"i hate javascript"},
 			longRange: false,
 			medRange: false,
 			shortRange: false,
@@ -23,6 +31,8 @@ class PitInput extends React.Component {
 			highGoal: false,
 			wheelOfFortune: false,
 		};
+		this.getPitData();
+		
 		this.formVals = {};
 		this.test = {};
 		this.cookies = this.props.cookies;
@@ -38,7 +48,27 @@ class PitInput extends React.Component {
 	handleSubmit(event) {
 		return this.props.firebase.pitData(this.state.email)(this.state.teamNumber).set(this.state);
 	}
+	getPitData(){
+		this.props.firebase.table('/').on('value', snapshot => {
+			const table = snapshot.val();
+			let pitData;
+			console.log("Tableu", table["scoutAssignments"][this.id], this.id)
+			if(table["scoutAssignments"][this.id]!= null ){
+				pitData = table["scoutAssignments"][this.id]["pit"];
+				
+			}else{
+				pitData = {}
+			}
+
+			this.setState({
+				pitData
+			});
+		});
+		
+	}
 	render() {
+		console.log(JSON.stringify(this.state.pitData))
+
 		return (
 			<div>
 				<Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark text-white">
@@ -51,7 +81,13 @@ class PitInput extends React.Component {
 
 							<Form.Group>
 								<Form.Label>Team Number</Form.Label>
-								<Form.Control onChange={this.handleChange} id="teamNumber" type="number" pattern="[0-9]*" min={0} placeholder="Enter Team Number" />
+								<Form.Control onChange={this.handleChange} id="teamNumber" as="select">
+									<option disabled>Select a Team</option>
+									{Object.values(this.state.pitData).map((val,index)=>{
+										
+										return (<option key = {index} value = {val}>Team Number {val} </option>)
+									})}
+								</Form.Control>
 							</Form.Group>
 							<Form.Group>
 								<Form.Label>Type of Drivetrain</Form.Label>
@@ -79,14 +115,14 @@ class PitInput extends React.Component {
 										onChange={this.handleChange}
 									/>
 								</Form.Group>
-								<Form.Group as={Col} className="text-center">
+								{/* <Form.Group as={Col} className="text-center">
 									<Form.Check
 										type="switch"
 										id="wheelOfFortune"
 										label="Wheel of Fortune?"
 										onChange={this.handleChange}
 									/>
-								</Form.Group>
+								</Form.Group> */}
 							</Form.Row>
 							{(this.state.highGoal) &&
 							<Form.Row>
@@ -104,10 +140,11 @@ class PitInput extends React.Component {
 								<Form.Label>Climbing?</Form.Label>
 								<Form.Control id="climbing" onChange={this.handleChange} as="select">
 									<option default>Can it climb?</option>
-									<option>No Climb</option>
-									<option>Stationary Climb</option>
-									<option>Buddy Climb</option>
-									<option>Other</option>
+									<option>Cant</option>
+									<option>1st bar</option>
+									<option>2rd bar</option>
+									<option>3rd bar</option>
+									<option>4th bar</option>
 								</Form.Control>
 							</Form.Group>
 							{(this.state.climbing === "Other") &&

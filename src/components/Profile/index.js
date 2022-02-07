@@ -23,8 +23,10 @@ class Profile extends React.Component {
 	componentDidMount() {
 		this.setState({ loading: true });
 		this.props.firebase.matchInfo(this.id).on('value', snapshot => {
-			this.matches = snapshot.val()['match'];
-			this.pits = snapshot.val()['pit'];
+			if (!!snapshot.val()) {
+				this.matches = snapshot.val()['match'];
+				this.pits = snapshot.val()['pit'];
+			}
 			this.setState({
 				loading: false,
 			});

@@ -5,6 +5,22 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 // My Stuff
 import { withAuthorization } from "../Session";
 
+const speeds = [
+	"Slow",
+	"Medium",
+	"Fast",
+	"Very Fast",
+	"Ludicrous"
+]
+
+const climbs = [
+	"Did Not Climb",
+	"1st Bar",
+	"2nd Bar",
+	"3rd Bar",
+	"4th Bar"
+]
+
 class AdminPage extends Component {
 	constructor(props) {
 		super(props);
@@ -61,7 +77,7 @@ const TablePrint = ({ table }) => (
 				<th>High Goals in Teleop</th>
 				<th>Low Goals in Teleop</th>
 				<th>Robot Speed</th>
-				<th>Successful Climb</th>
+				<th>Climb</th>
 			</tr>
 			</thead>
 			<tbody>
@@ -83,8 +99,8 @@ const TablePrint = ({ table }) => (
 										<th>{currentObj['teleopBallsPickedUp']}</th>
 										<th>{currentObj['teleopHighGoals']}</th>
 										<th>{currentObj['teleopLowGoals']}</th>
-										<th>{currentObj['teleopRobotSpeed']}</th>
-										<th>{String(currentObj['successfulClimb'])}</th>
+										<th>{speeds[currentObj['teleopRobotSpeed']]}</th>
+										<th>{climbs[currentObj['climbProgress']]}</th>
 									</tr>
 								);
 							} else {return null}
