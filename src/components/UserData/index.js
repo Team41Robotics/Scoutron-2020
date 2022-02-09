@@ -47,7 +47,12 @@ class UserData extends React.Component {
 								return (
 									Object.keys(currentAssign[user].match).map((match) => {
 										const currentMatch = currentAssign[user].match[match];
-										const color = (!!scoutMatches[user][currentMatch]) ? "bg-success" : "bg-danger";
+										let color;
+										if (!!scoutMatches[user]) {
+											color = (!!scoutMatches[user][currentMatch]) ? "bg-success" : "bg-danger";
+										} else {
+											color = "bg-danger"
+										}
 										return (
 											<tr>
 												<th>{user}</th>
