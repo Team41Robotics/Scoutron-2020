@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 // Bootstrap
+import Col from 'react-bootstrap/Col';
+
 import { Form, FormControl, FormLabel, Button } from "react-bootstrap";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import { withAuthorization } from '../Session';
@@ -15,6 +17,7 @@ class Additions extends Component{
             matches: null,
             currentUser: "",
             ready: false,
+            fields: {}
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -113,8 +116,13 @@ class Additions extends Component{
             matches = [`${this.state.tempMatch}-${this.state.tempTeam}`]
         }
         this.setState({
-            matches
+            matches,
+            tempTeam: null,
+            tempMatch: null
         });
+        Array.from(document.querySelectorAll("input")).forEach(
+            input => (input.value = "")
+        );
     }
 
     addPit(e) {
@@ -128,6 +136,9 @@ class Additions extends Component{
         this.setState({
             pits
         }); 
+        Array.from(document.querySelectorAll("input")).forEach(
+            input => (input.value = "")
+        );
     }
 
     render() {
@@ -137,6 +148,8 @@ class Additions extends Component{
                     <Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark text-white">
                         <Jumbotron className="py-4" style={{backgroundColor: "rgba(255,255,255,0.25)"}}>
                             <h1>Scout Assigner</h1>
+                            <br/>
+                            
                             <form>
                                 <FormLabel> 
                                     Select user to modify
@@ -149,33 +162,68 @@ class Additions extends Component{
                                 </FormControl>
                             </form>
                         </Jumbotron>
+                     
                         {!!this.state.currentUser ? 
                             <div>
                             <Jumbotron className="py-4" style={{backgroundColor: "rgba(255,255,255,0.25)"}}>
                                 <h1>Match Assignments</h1>
+                                <br/>
                                 {!!this.state.matches ? 
                                     <form>
-                                        {this.state.matches.map((key, val) => {
-                                            return (
-                                                <div key={val} className="mb-2">
-                                                    <Form.Label className="mr-2">{key}</Form.Label>
-                                                    <Button value={key} variant="dark" onClick={this.removeMatch}>Remove</Button>
-                                                </div>
+                                        <Form.Row>    
+                                            {this.state.matches.map((key, val) => {
+                                                return (
+                                                
+                                                    <Form.Group as={Col}>
+                                                        <div key={val} className="mb-2">
+                                                        
+                                                        
+                                                            <Form.Label className="mr-2">{key}</Form.Label>
+                                                    
+                                                        
+                                                            <Button value={key} variant="dark" onClick={this.removeMatch}>Remove</Button>
+                                                        
+                                            
+                                                        </div>
+                                                    </Form.Group>
                                             );
                                         })}
+                                        </Form.Row>
+
                                     </form>
                                 : <span></span>
                                 }
                                 <Form.Group>
-                                    <FormControl onChange={(e) => {this.setState({tempMatch: e.target.value})}} placeholder="Match Number" type="number" required></FormControl>
-                                    <FormControl onChange={(e) => {this.setState({tempTeam: e.target.value})}} placeholder="Team Number" type="number" required></FormControl>
-                                    <Button type="submit" onClick={this.addMatch}>Add</Button>
+                                    <Form.Row>
+                                        <Form.Group as = {Col}>
+                                            <FormControl value = {this.state.tempMatch} onChange={(e) => {this.setState({tempMatch: e.target.value})}} placeholder="Match Number" type="number" required></FormControl>
+                                        </Form.Group>
+                                        <Form.Group as = {Col}>
+                                            <FormControl value = {this.state.tempTeam} onChange={(e) => {this.setState({tempTeam: e.target.value})}} placeholder="Team Number" type="number" required></FormControl>
+                                        </Form.Group>
+                                        <Form.Group as = {Col} xs = {1}>
+                                            <Button variant={"success"} className = "text-center" type="submit" onClick={this.addMatch}>Add</Button>
+                                        </Form.Group>
+                                    </Form.Row>
+                                    
                                 </Form.Group>
-                                <Button onClick={this.handleSubmit}>Submit</Button>
+                                <Form.Row>
+                                    <Form.Group as = {Col}>
+                                        <br/>
+                                    </Form.Group>
+
+                                    <Form.Group as = {Col}>
+                                        <Button onClick={this.handleSubmit } style={{ height: 100, width: 500 }}>Submit</Button>
+                                    </Form.Group>
+                                    <Form.Group as = {Col}>
+                                        <br/>
+                                    </Form.Group>
+                                </Form.Row>
                             </Jumbotron>
                             {/* Pits */}
                             <Jumbotron className="py-4" style={{backgroundColor: "rgba(255,255,255,0.25)"}}>
                                 <h1>Pit Assignments</h1>
+                                <br/>
                                 {!!this.state.pits ? 
                                     <form>
                                         {this.state.pits.map((key, val) => {
@@ -190,10 +238,30 @@ class Additions extends Component{
                                 : <span></span>
                                 }
                                 <Form.Group>
-                                    <FormControl onChange={(e) => {this.setState({tempPit: e.target.value})}} placeholder="Team Number" type="number" required></FormControl>
-                                    <Button type="submit" onClick={this.addPit}>Add</Button>
+                                    <Form.Row>
+                                        <Form.Group as = {Col} xs = {10}>
+                                            <FormControl onChange={(e) => {this.setState({tempPit: e.target.value})}} placeholder="Team Number" type="number" required></FormControl>
+                                        </Form.Group>
+                                        <Form.Group as = {Col}>
+                                            <Button type="submit" variant={"success"} onClick={this.addPit}>Add</Button>
+                                        </Form.Group>
+                                    </Form.Row>
+                                
                                 </Form.Group>
-                                <Button onClick={this.handlePitSubmit}>Submit</Button>
+                                <br/>
+                                <Form.Row>
+                                    <Form.Group as = {Col}>
+                                        <br/>
+                                    </Form.Group>
+
+                                    <Form.Group as = {Col}>
+                                        <Button onClick={this.handlePitSubmit} style={{ height: 100, width: 500 }}>Submit</Button>
+                                    </Form.Group>
+                                    <Form.Group as = {Col}>
+                                        <br/>
+                                    </Form.Group>
+                                </Form.Row>
+                                
                             </Jumbotron>
                             </div>
                          : <span></span>}

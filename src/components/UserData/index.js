@@ -11,6 +11,7 @@ class UserData extends React.Component {
 	constructor(props) {
 		super(props);
 		this.fb = this.props.firebase;
+		
 		if (this.props.cookies.get('sid')) {
 			this.id = this.props.cookies.get('sid').substring(0, this.props.cookies.get('sid').search('@'));
 		}

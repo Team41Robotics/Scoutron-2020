@@ -63,10 +63,13 @@ class PitInput extends React.Component {
 			}
 
 			this.pitData = pitData;
+			console.log(this.pitData);
+			this.forceUpdate();
 		});
 		
 	}
 	render() {
+		console.log(this.pitData);
 		return (
 			<div>
 				<Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark text-white">
