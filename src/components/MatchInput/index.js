@@ -37,7 +37,7 @@ class MatchInput extends React.Component {
 			(event.target.checked === "on") ? this.setState({[index]: true}): this.setState({[index]: false});
 		} else {
 			let key = event.target.value;
-			if (event.target.id == "teamAndMatch") {
+			if (event.target.id === "teamAndMatch") {
 				this.setState({[index]: {match: key.substring(0, key.search('-')), team: key.substring(key.search('-')+1)}});
 			} else {
 				this.setState({[index]: key});

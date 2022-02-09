@@ -8,3 +8,4 @@ export const USERDATA = '/userdata';
 export const SCOUT_MATCH = '/matchinput';
 export const SCOUT_PIT = '/pitinput';
 export const PROFILE = '/profile';
+export const ADDITIONPAGE = '/additions';

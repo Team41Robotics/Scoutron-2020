@@ -17,6 +17,7 @@ import PitAdminPage from "../PitAdmin";
 import UserData from "../UserData";
 import SignInPage from "../SignIn";
 import SignOutPage from "../SignOut";
+import Additions from "../Additions";
 import { withFirebase } from '../Firebase';
 import '../App/App.css';
 //Bootstrap
@@ -76,6 +77,7 @@ class App extends React.Component {
 						<Route path={ROUTES.SCOUT_MATCH} render={ () => (<MatchInput cookies={this.props.cookies}/>) } />
 						<Route path={ROUTES.SCOUT_PIT} render={ () => (<PitInput cookies={this.props.cookies} />) } />
 						<Route path={ROUTES.PROFILE} render={ () => (<Profile cookies={this.props.cookies} />) } />
+						<Route path={ROUTES.ADDITIONPAGE} render = {()=>(<Additions cookies={this.props.cookies}/>)}/>
 					</div>
 				</Router>
 			</AuthUserContext.Provider>
