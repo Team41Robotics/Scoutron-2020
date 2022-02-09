@@ -54,7 +54,17 @@ class NavigationAuth extends React.Component {
 					<Link to={ROUTES.PROFILE} className="mr-3 text-muted text-decoration-none">Profile</Link>
 					<AuthUserContext.Consumer>
 						{authUser => !!authUser && (this.role === ROLES.ADMIN) ?
-							<Link to={ROUTES.USERDATA} className="mr-3 text-muted text-decoration-none">User Data</Link>
+							<div>
+								<Link to={ROUTES.USERDATA} className="mr-3 text-muted text-decoration-none">User Data</Link>
+							</div>
+							: null
+						}
+					</AuthUserContext.Consumer>
+					<AuthUserContext.Consumer>
+						{authUser => !!authUser && (this.role === ROLES.ADMIN) ?
+							<div>
+								<Link to={ROUTES.ADDITIONPAGE} className="mr-3 text-muted text-decoration-none">Add asssignments</Link>
+							</div>
 							: null
 						}
 					</AuthUserContext.Consumer>

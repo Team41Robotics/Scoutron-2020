@@ -23,20 +23,23 @@ class PitInput extends React.Component {
 		this.state = {
 			uid: this.props.cookies.get('uid'),
 			email: sid.substring(0, sid.search('@')),
-			pitData: {gay:"i hate javascript"},
 			longRange: false,
 			medRange: false,
 			shortRange: false,
 			lowGoal: false,
 			highGoal: false,
-			wheelOfFortune: false,
 		};
-		this.getPitData();
 		
+		this.pitData = {};
 		this.formVals = {};
 		this.test = {};
 		this.cookies = this.props.cookies;
 	}
+
+	componentDidMount() {
+		this.getPitData();
+	}
+
 	handleChange(event) {
 		let index = event.target.id;
 		if (event.target.type === "checkbox") {
@@ -55,20 +58,15 @@ class PitInput extends React.Component {
 			console.log("Tableu", table["scoutAssignments"][this.id], this.id)
 			if(table["scoutAssignments"][this.id]!= null ){
 				pitData = table["scoutAssignments"][this.id]["pit"];
-				
 			}else{
 				pitData = {}
 			}
 
-			this.setState({
-				pitData
-			});
+			this.pitData = pitData;
 		});
 		
 	}
 	render() {
-		console.log(JSON.stringify(this.state.pitData))
-
 		return (
 			<div>
 				<Jumbotron className="mx-3 mx-sm-5 my-3 py-5 bg-dark text-white">
@@ -83,9 +81,8 @@ class PitInput extends React.Component {
 								<Form.Label>Team Number</Form.Label>
 								<Form.Control onChange={this.handleChange} id="teamNumber" as="select">
 									<option disabled>Select a Team</option>
-									{Object.values(this.state.pitData).map((val,index)=>{
-										
-										return (<option key = {index} value = {val}>Team Number {val} </option>)
+									{Object.values(this.pitData).map((val,index)=>{
+										return (<option key = {index} value = {val}>Team {val} </option>)
 									})}
 								</Form.Control>
 							</Form.Group>
@@ -115,14 +112,6 @@ class PitInput extends React.Component {
 										onChange={this.handleChange}
 									/>
 								</Form.Group>
-								{/* <Form.Group as={Col} className="text-center">
-									<Form.Check
-										type="switch"
-										id="wheelOfFortune"
-										label="Wheel of Fortune?"
-										onChange={this.handleChange}
-									/>
-								</Form.Group> */}
 							</Form.Row>
 							{(this.state.highGoal) &&
 							<Form.Row>

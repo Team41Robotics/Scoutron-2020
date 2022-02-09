@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // Bootstrap
 import { Form, FormControl, FormLabel, Button } from "react-bootstrap";
 import Jumbotron from "react-bootstrap/Jumbotron";
-import { withAuthentication } from '../Session';
+import { withAuthorization } from '../Session';
 
 // My Stuff
 
@@ -25,9 +25,12 @@ class Additions extends Component{
         this.addPit = this.addPit.bind(this);
         this.removePit = this.removePit.bind(this);
         this.handlePitSubmit = this.handlePitSubmit.bind(this);
+    }
 
+    componentDidMount() {
         this.getUsers();
     }
+    
     handleChange(event) {
         console.log(event.target.value);
     }
@@ -204,4 +207,4 @@ class Additions extends Component{
         }
     }
 }
-export default withAuthentication(Additions);
+export default withAuthorization(Additions, "admin");

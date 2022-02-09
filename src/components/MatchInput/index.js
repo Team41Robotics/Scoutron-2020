@@ -28,9 +28,12 @@ class MatchInput extends React.Component {
 		} else {
 			window.history.back();
 		}
-		this.getMatches();
 	}
 	
+	componentDidMount() {
+		this.getMatches();
+	}
+
 	handleChange(event) {
 		let index = event.target.id;
 		if (event.target.type === "checkbox") {
