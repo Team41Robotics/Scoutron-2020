@@ -147,7 +147,7 @@ class MatchInput extends React.Component {
 								label="Successful Climb"
 								onChange={this.handleChange}
 							/> */}
-							<Form.Control defaultValue="climb progress" id="climbProgress" onChange={this.handleChange} as="select">
+							<Form.Control defaultValue="Climb Progress" id="climbProgress" onChange={this.handleChange} as="select">
 									<option disabled>Climb Progress</option>
 									<option value={0}>Did Not Climb</option>
 									<option value={1}>1st Bar</option>

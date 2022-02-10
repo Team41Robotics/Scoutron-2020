@@ -43,25 +43,28 @@ class Profile extends React.Component {
 				{this.state.loading && <div>Loading ...</div>}
 				<Jumbotron className="mx-3 mx-sm-5 my-3 text-center text-sm-left bg-dark text-light">
 					<div className="h3">My Pit Scouting Assignments:</div>
-					<Table hover repsonsive variant="dark">
+					<Table hover repsonsive="true" variant="dark">
 						<thead>
-						<tr>
-							<th>Team #</th>
-						</tr>
+							<tr>
+								<th>Team #</th>
+							</tr>
 						</thead>
 						<tbody>
-						{Object.keys(this.pits).map((pit, index) => {
-							if (this.matches[index+1]) {
-								this.currentBoi = this.pits[index + 1];
-							} else {
-								this.currentBoi = "";
-							}
-							this.teamNum = this.currentBoi;
-							return (
-								<tr>
-									<th>{this.teamNum}</th>
-								</tr>
-							);})}
+						{!!this.pits ? 
+							Object.keys(this.pits).map((pit, index) => {
+								if (this.matches[index]) {
+									this.currentBoi = this.pits[index];
+								} else {
+									this.currentBoi = "";
+								}
+								this.teamNum = this.currentBoi;
+								return (
+									<tr>
+										<th>{this.teamNum}</th>
+									</tr>
+								);})
+							: null
+						}
 						</tbody>
 					</Table>
 				</Jumbotron>
@@ -77,18 +80,18 @@ class Profile extends React.Component {
 						</thead>
 						<tbody>
 						{Object.keys(this.matches).map((match, index) => {
-							if (this.matches[index+1]) {
-								this.currentBoi = this.matches[index + 1];
+							if (this.matches[index]) {
+								this.currentBoi = this.matches[index];
 							} else {
 								this.currentBoi = "";
 							}
 							this.matchNum = this.currentBoi.substring(0, this.currentBoi.search('-'));
 							this.teamNum = this.currentBoi.substring(this.currentBoi.search('-')+1)
 							return (
-							<tr>
-								<th>{this.matchNum}</th>
-								<th>{this.teamNum}</th>
-							</tr>
+								<tr key={index}>
+									<th>{this.matchNum}</th>
+									<th>{this.teamNum}</th>
+								</tr>
 							);})}
 						</tbody>
 					</Table>
