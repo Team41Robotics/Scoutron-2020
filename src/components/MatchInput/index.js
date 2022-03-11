@@ -67,6 +67,15 @@ class MatchInput extends React.Component {
 				matches
 			});
 		});
+		this.props.firebase.table('/').on('value', snapshot => {
+			const table = snapshot.val();
+			let eventKey;
+			eventKey=table["eventKey"]["EventKey"]
+
+			this.setState({
+				eventKey
+			});
+		});
 	}
 
 	render() {
@@ -167,6 +176,7 @@ class MatchInput extends React.Component {
 									<option value={4}>4th Bar</option>
 								</Form.Control>
 						</Jumbotron>
+						
 						<Button block size="lg" type="submit" className="bg-secondary border-0">Submit Scout</Button>
 					</Form>
 				</Jumbotron>
