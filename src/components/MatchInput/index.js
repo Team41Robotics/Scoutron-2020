@@ -58,8 +58,9 @@ class MatchInput extends React.Component {
 			let matches;
 			if(table["scoutAssignments"][this.id]!= null ){
 				matches = table["scoutAssignments"][this.id]["match"];
+				console.log(matches);
 			}else{
-				matches = {}
+				matches = ['[empty]-[empty]']
 			}
 
 			this.setState({
@@ -121,6 +122,16 @@ class MatchInput extends React.Component {
 								<Form.Group as={Col}>
 									<Form.Label>Low Goals</Form.Label>
 									<Form.Control id="teleopLowGoals" onChange={this.handleChange} type="number" pattern="[0-9]*" min={0} placeholder="Low Goals" />
+								</Form.Group>
+							</Form.Row>
+							<Form.Row>
+								<Form.Group as={Col}>
+									<Form.Label>High Goal Ricochets</Form.Label>
+									<Form.Control id="highGoalRicochets" onChange={this.handleChange} type="number" pattern="[0-9]*" min={0} placeholder="High Goal Ricochets" />
+								</Form.Group>
+								<Form.Group as={Col}>
+									<Form.Label>Low Goals Ricochets</Form.Label>
+									<Form.Control id="lowGoalRicochets" onChange={this.handleChange} type="number" pattern="[0-9]*" min={0} placeholder="Low Goal Ricochets" />
 								</Form.Group>
 							</Form.Row>
 							<Form.Group>

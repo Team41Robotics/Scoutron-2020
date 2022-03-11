@@ -59,7 +59,7 @@ class PitInput extends React.Component {
 			if(table["scoutAssignments"][this.id]!= null ){
 				pitData = table["scoutAssignments"][this.id]["pit"];
 			}else{
-				pitData = {}
+				pitData = ['[empty]']
 			}
 
 			this.pitData = pitData;

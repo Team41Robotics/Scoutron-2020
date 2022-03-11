@@ -78,6 +78,9 @@ const TablePrint = ({ table }) => (
 				<th>Low Goals in Teleop</th>
 				<th>Robot Speed</th>
 				<th>Climb</th>
+				<th>High Goal Ricochets</th>
+				<th>Low Goal Ricochets</th>
+
 			</tr>
 			</thead>
 			<tbody>
@@ -101,6 +104,8 @@ const TablePrint = ({ table }) => (
 										<th>{currentObj['teleopLowGoals']}</th>
 										<th>{speeds[currentObj['teleopRobotSpeed']]}</th>
 										<th>{climbs[currentObj['climbProgress']]}</th>
+										<th>{currentObj['highGoalRicochets']}</th>
+										<th>{currentObj['lowGoalRicochets']}</th>
 									</tr>
 								);
 							} else {return null}

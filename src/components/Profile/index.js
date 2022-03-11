@@ -26,6 +26,9 @@ class Profile extends React.Component {
 			if (!!snapshot.val()) {
 				this.matches = snapshot.val()['match'];
 				this.pits = snapshot.val()['pit'];
+			}else{
+				this.matches = ['[empty]-[empty]'];
+				this.pits = ['[empty]'];
 			}
 			this.setState({
 				loading: false,
