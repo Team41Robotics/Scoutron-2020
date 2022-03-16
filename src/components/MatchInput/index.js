@@ -10,6 +10,8 @@ import { withAuthentication } from '../Session';
 class MatchInput extends React.Component {
 	
 	constructor(props) {
+		var keys = ["autonLowGoals","autonHighGoals"]
+
 		super(props);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,10 +30,19 @@ class MatchInput extends React.Component {
 		} else {
 			window.history.back();
 		}
+
 	}
 	
 	componentDidMount() {
 		this.getMatches();
+		this.setState({"autonLowGoals":0})
+		this.setState({"autonHighGoals":0})
+		this.setState({"teleopHighGoals":0})
+		this.setState({"teleopLowGoals":0})
+		this.setState({"highGoalRicochets":0})
+		this.setState({"lowGoalRicochets":0})
+		this.setState({"autonBallsPickedUp":0})
+		this.setState({"teleopBallsPickedUp":0})
 	}
 
 	handleChange(event) {
@@ -53,7 +64,7 @@ class MatchInput extends React.Component {
 	}
 
 	getMatches() {
-		this.props.firebase.table('/').on('value', snapshot => {
+		 this.props.firebase.table('/').on('value', snapshot => {
 			const table = snapshot.val();
 			let matches;
 			if(table["scoutAssignments"][this.id]!= null ){
@@ -65,7 +76,7 @@ class MatchInput extends React.Component {
 
 			this.setState({
 				matches
-			});
+			}); 
 		});
 		this.props.firebase.table('/').on('value', snapshot => {
 			const table = snapshot.val();

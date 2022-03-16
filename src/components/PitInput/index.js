@@ -61,7 +61,15 @@ class PitInput extends React.Component {
 			}else{
 				pitData = ['[empty]']
 			}
-
+			this.props.firebase.table('/').on('value', snapshot => {
+				const table = snapshot.val();
+				let eventKey;
+				eventKey=table["eventKey"]["EventKey"]
+	
+				this.setState({
+					eventKey
+				});
+			});
 			this.pitData = pitData;
 			console.log(this.pitData);
 			this.forceUpdate();

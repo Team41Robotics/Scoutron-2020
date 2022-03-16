@@ -80,7 +80,6 @@ const TablePrint = ({ table }) => (
 										<th>{String(currentObj['longRange'])}</th>
 										<th>{String(currentObj['medRange'])}</th>
 										<th>{String(currentObj['shortRange'])}</th>
-										<th>{String(currentObj['wheelOfFortune'])}</th>
 									</tr>
 								);
 							} else {return null}
