@@ -68,10 +68,15 @@ class MatchInput extends React.Component {
 			const table = snapshot.val();
 			let matches;
 			if(table["scoutAssignments"][this.id]!= null ){
+				
 				matches = table["scoutAssignments"][this.id]["match"];
+				
+				
+
+
 				console.log(matches);
 			}else{
-				matches = ['[empty]-[empty]']
+				matches = ['[empty]-[empty]']	
 			}
 
 			this.setState({
@@ -113,7 +118,65 @@ class MatchInput extends React.Component {
 									})}
 								</Form.Control>
 							</Form.Group>
+						
+    						
+  							
 							</Form.Row>
+						</Jumbotron>
+						<Jumbotron className="py-4" style={{backgroundColor: "rgba(255,255,255,0.25)"}}>
+									<h3 class="text-center">Penalties</h3>
+									
+									<Form.Row>
+											<Form.Group as={Col} className="text-center col-6 col-md-4">
+											<Form.Check
+												type="switch"
+												id="showedUp"
+												label="Didnt Show Up"
+												onChange={this.handleChange}
+											/>
+									</Form.Group>
+									<Form.Group as={Col} className="text-center col-7 col-md-4">
+											<Form.Check
+												type="switch"
+												id="brokeDown"
+												label="Broke Down?"
+												onChange={this.handleChange}
+											/>
+									</Form.Group>
+									<Form.Group as={Col} className="text-center col-7 col-md-4">
+											<Form.Check
+												type="switch"
+												id="didntStart"
+												label="Didnt Start"
+												onChange={this.handleChange}
+											/>
+									</Form.Group>
+									<Form.Group as={Col} className="text-center col-7 col-md-4">
+											<Form.Check
+												type="switch"
+												id="bumperBroke"
+												label="Bumper Fell Off"
+												onChange={this.handleChange}
+											/>
+									</Form.Group>
+									<Form.Group as={Col} className="text-center col-7 col-md-4">
+											<Form.Check
+												type="switch"
+												id="stopMoving"
+												label="Stopped Moving"
+												onChange={this.handleChange}
+											/>
+									</Form.Group>
+									<Form.Group as={Col} className="text-center col-7 col-md-4">
+											<Form.Check
+												type="switch"
+												id="hitDuringAuton"
+												label="Hit During Auton"
+												onChange={this.handleChange}
+											/>
+									</Form.Group>
+							
+									</Form.Row>
 						</Jumbotron>
 						<Jumbotron className="py-4" style={{backgroundColor: "rgba(255,255,255,0.25)"}}>
 							<h3 className="text-center">Auton</h3>

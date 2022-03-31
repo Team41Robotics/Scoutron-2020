@@ -4,7 +4,7 @@ import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from "react-bootstrap/Button";
-
+import Image from 'react-bootstrap/Image';
 import {withAuthentication} from '../Session';
 
 class PitInput extends React.Component {
@@ -147,12 +147,28 @@ class PitInput extends React.Component {
 									<option>4th bar</option>
 								</Form.Control>
 							</Form.Group>
+								<Form.Group as={Col}>
+									<Form.Label>LOCATION LOCATION LOCATION</Form.Label>
+									<Form.Control id="startingLocation" onChange={this.handleChange} as="select">
+										<option default>dont care</option>
+										
+										<option>A</option>
+										<option>B</option>
+										<option>C</option>
+										<option>D</option>
+									</Form.Control>
+							</Form.Group>
+								<Image  width = "50%" height = "50%" src = {process.env.PUBLIC_URL+'/images/2022LayoutMarkingDiagram-4.png'} alt = "zamn" 	/>
+							
 							{(this.state.climbing === "Other") &&
 							<Form.Group>
 								<Form.Label>Please specify:</Form.Label>
 								<Form.Control type="text"/>
 							</Form.Group>
 							}
+							
+								
+							
 						</Jumbotron>
 						<Button block size="lg" type="submit" className="bg-secondary border-0">Submit Scout</Button>
 					</Form>
