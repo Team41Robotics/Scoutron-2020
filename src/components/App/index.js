@@ -7,6 +7,7 @@ import {withAuthentication} from "../Session";
 import {withCookies} from "react-cookie";
 import {AuthUserContext} from "../Session/";
 // My stuff
+import Roster from "../Roster";
 import MatchInput from "../MatchInput";
 import PitInput from "../PitInput";
 import Profile from "../Profile";
@@ -77,6 +78,7 @@ class App extends React.Component {
 						<Route path={ROUTES.SCOUT_MATCH} render={ () => (<MatchInput cookies={this.props.cookies}/>) } />
 						<Route path={ROUTES.SCOUT_PIT} render={ () => (<PitInput cookies={this.props.cookies} />) } />
 						<Route path={ROUTES.PROFILE} render={ () => (<Profile cookies={this.props.cookies} />) } />
+						<Route path ={ROUTES.ROSTER} render={()=>(<Roster cookies = {this.props.cookies}/>)}/>
 						<Route path={ROUTES.ADDITIONPAGE} render = {()=>(<Additions cookies={this.props.cookies}/>)}/>
 					</div>
 				</Router>

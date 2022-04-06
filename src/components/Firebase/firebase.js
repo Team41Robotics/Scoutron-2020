@@ -48,6 +48,8 @@ class Firebase {
 	addMatch = uid => this.db.ref(`/scoutAssignments/${uid}/match/`)
 	addPit = uid => this.db.ref(`/scoutAssignments/${uid}/pit/`)
 	getEvent = uid => this.db.ref('/eventKey')
+	alternateRole = uid	=> this.db.ref(`/users/${uid}/role/`)
+	
 	matchIsDone = uid => matchTeam => {
 		this.otherScoutData(uid)(matchTeam).on('value', snapshot => {
 			return snapshot.val();
